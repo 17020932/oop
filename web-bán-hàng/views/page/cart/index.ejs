@@ -1,0 +1,56 @@
+
+<% include ./../../element/header-2 %>
+
+<!-- content -->
+<div class="container mt-3 mb-3">
+    <div id="titleCart">
+        <div class="step1">
+            <i class="bg-danger">1</i>
+            <span>giỏ hàng</span>
+        </div>
+        <div class="step2">
+            <i>2</i>
+            <span>thông tin thanh toán</span>
+        </div>
+        <div class="step3">
+            <i>3</i>
+            <span>xác nhận thành công</span>
+        </div>
+        <span id="bdTCart"></span>
+    </div>
+</div>
+
+<div class="m-3 p-3">
+    <h5>Thông tin giỏ hàng</h5>
+    <table class="table .table-secondary table-striped mt-3" id="cart">
+        <thead>
+            <tr>
+                <th>ảnh sản phẩm</th>
+                <th>tên sản phẩm</th>
+                <th>mã sản phẩm</th>
+                <th>số lượng</th>
+                <th>thành tiền</th>
+                <th>xóa</th>
+            </tr>
+        </thead>
+        <tbody id="cartBody">
+
+        </tbody>
+    </table>
+    <div style="text-align: center; color: red;" id="note">
+        <p>bạn hiện chưa có sản phẩm nào</p>
+    </div>
+    <div class="row justify-content-end m-3">
+        <form>
+            <a href="/danh-muc-san-pham"><input type="button" value="xem sản phẩm khác"></a>
+            <input type="button" value="thanh toán">
+        </form>
+    </div>
+</div>
+
+<div class="m-3 p-3">
+    <h5>Thông tin thanh toán</h5>
+    <form>
+        <input type="text" name="">
+    </form>
+</div>
