@@ -7,6 +7,20 @@ var logger = require('morgan');
 //var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
 var expressLayouts = require('express-ejs-layouts');
+var mongoose = require('mongoose');
+
+var app = express();
+
+//connect database
+mongoose.connect('mongodb+srv://ngoc123:ngoc123@cluster0-hqv14.mongodb.net/2hand_market?retryWrites=true');
+var db = mongoose.connection;
+db.on('error', ()=>{
+  console.log('connection error:');
+});
+db.once('open', () => {
+  console.log('connected');
+  // we're connected!
+});
 
 //PATH
 
