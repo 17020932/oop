@@ -1,0 +1,114 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+<!-- plugin for img -->
+<script src="./scripts/zoom-image.js"></script>
+
+<!-- add to cart -->
+<script>
+    var cart = [];
+    $(function () {
+        if (localStorage.cart) {
+            cart = JSON.parse(localStorage.cart);
+            showCart();
+        }
+    });
+
+    function addToCart() {
+        var price = $("#price").text();
+        var name = $("#name").text();
+        var qty = $("#amount").val();
+        var id = $('#id').val();
+        var img = $('#show-img').attr('src');
+
+        // update qty nếu product đã có trg cart[]
+        for (var i in cart) {
+            if (cart[i].Product == name) {
+                cart[i].Qty = qty;
+                showCart();
+                saveCart();
+                setTimeout(function () { alert("đã thêm vào giỏ hàng"); }, 500);
+                var sum = total();
+                localStorage.setItem('total', sum);
+                //$(".Qty").text("( " + sum + ")");
+                console.log(sum);
+                return;
+            }
+        }
+        // create JavaScript Object
+        var item = { Img: img, Product: name, Price: price, Qty: qty, id: id };
+        cart.push(item);
+        saveCart();
+        showCart();
+        setTimeout(function () { alert("Thêm vào giỏ hàng thành công"); }, 500);
+        var sum = total();
+        localStorage.setItem('total', sum);
+        //$(".Qty").text("( " + sum + ")");
+        console.log(sum);
+
+    }
+
+    function deleteItem(index) {
+        cart.splice(index, 1); // delete item at index
+        showCart();
+        saveCart();
+    }
+
+    function saveCart() {
+        if (window.localStorage) {
+            localStorage.cart = JSON.stringify(cart);
+        }
+    }
+
+    function showCart() {
+        if (cart.length == 0) {
+            $("#cartBody").css("visibility", "hidden");
+            $("#note").css("visibility", "visible");
+            return;
+        }
+
+        $("#cartBody").css("visibility", "visible");
+        $("#note").css("visibility", "hidden");
+        $("#cartBody").empty();
+        for (var i in cart) {
+            var item = cart[i];
+            var Qty = parseInt(item.Qty);
+            var Price = parseInt(item.Price.split('.').join(''));
+            // console.log(Qty);
+
+            // console.log(Price);
+            var row = "<tr><td>" + "<img src='" + item.Img + "' style='height:80px; wigth:45px;border:1px solid;'>" +
+                "</td><td style='vertical-align: middle;'>" + item.Product +
+                "</td><td style='vertical-align: middle;'>" + item.id +
+                "</td><td style='vertical-align: middle;'" + item.Qty +
+                "</td><td style='vertical-align: middle;'>" + Qty * Price + 'đ' +
+                "</td><td style='vertical-align: middle;'>" + "<button onclick='deleteItem(" + i + ")'>Delete</button></td></tr>";
+            $("#cartBody").append(row);
+        }
+    }
+
+    function total() {
+        let sum = 0;
+        for (let i in cart) {
+            sum += parseInt(cart[i].Qty);
+        }
+        return sum;
+    }
+
+
+    var result = localStorage.getItem('total');
+    $(".Qty").text("( " + result + ")");
+
+    console.log(result);
+
+    
+</script>
